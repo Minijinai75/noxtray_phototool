@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOXTRAY 劇情算圖工具包 │ 建構器</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #1a1a1a;
+            --surface-color: #2c2c2c;
+            --primary-text-color: #f5f5f5;
+            --secondary-text-color: #a0a0a0;
+            --accent-color: #9370DB; /* Elegant Medium Purple */
+            --accent-hover-color: #a380e3;
+            --border-color: #444;
+            --danger-color: #e53935;
+            --success-color: #43a047;
+        }
+
+        body { 
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            line-height: 1.8; 
+            padding: 20px; 
+            margin: 0; 
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+        }
+
+        .container { 
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: var(--surface-color); 
+            padding: 40px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { 
+            font-size: 2.5em; 
+            margin-bottom: 0.3em;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        header p { color: var(--secondary-text-color); font-size: 1.1em; }
+
+        h2 { 
+            font-size: 1.6em; 
+            border-bottom: 1px solid var(--border-color); 
+            padding-bottom: 10px; 
+            margin: 40px 0 20px 0;
+            color: #e0e0e0;
+            font-weight: 700;
+        }
+        
+        .info { 
+            background-color: rgba(0,0,0,0.2); 
+            padding: 15px 20px; 
+            border-radius: 8px; 
+            margin-bottom: 30px; 
+            border-left: 4px solid var(--accent-color); 
+            color: var(--secondary-text-color);
+        }
+        .info strong { color: var(--primary-text-color); }
+
+        .card { 
+            border: 1px solid var(--border-color); 
+            padding: 25px; 
+            margin-bottom: 20px; 
+            border-radius: 12px; 
+            background-color: rgba(0,0,0,0.15); 
+            transition: box-shadow 0.3s;
+        }
+        .card:focus-within {
+             box-shadow: 0 0 15px rgba(147, 112, 219, 0.2);
+        }
+
+        label { display: block; margin-bottom: 5px; color: var(--secondary-text-color); font-weight: 700; }
+        input, textarea { 
+            width: calc(100% - 24px); 
+            padding: 12px; 
+            margin-bottom: 10px;
+            border-radius: 8px; 
+            border: 1px solid var(--border-color); 
+            font-size: 1em;
+            background-color: #333;
+            color: var(--primary-text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px rgba(147, 112, 219, 0.5);
+            outline: none;
+        }
+        textarea { height: 130px; resize: vertical; }
+
+        button { 
+            padding: 12px 24px; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            border: none; 
+            font-size: 1em; 
+            font-weight: 700; 
+            transition: all 0.2s ease-in-out;
+        }
+        button:active { transform: scale(0.97); }
+
+        .main-btn { 
+            background-color: var(--accent-color); 
+            color: #ffffff; 
+            width: 100%; 
+            font-size: 1.2em; 
+            box-shadow: 0 4px 15px rgba(147, 112, 219, 0.2);
+        }
+        .main-btn:hover { background-color: var(--accent-hover-color); box-shadow: 0 6px 20px rgba(147, 112, 219, 0.3); }
+        
+        .add-btn { 
+            background-color: transparent; 
+            color: var(--success-color); 
+            border: 2px solid var(--success-color);
+            margin-top: 10px;
+        }
+        .add-btn:hover { background-color: var(--success-color); color: white; }
+        
+        .del-btn { 
+            background-color: transparent; 
+            color: var(--danger-color); 
+            border: 1px solid var(--danger-color);
+            float: right; 
+            padding: 5px 10px; 
+            font-size: 0.8em; 
+        }
+        .del-btn:hover { background-color: var(--danger-color); color: white; }
+        
+        .instructions { 
+            margin-top: 40px; 
+            background-color: rgba(0,0,0,0.2); 
+            padding: 25px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color);
+        }
+        .instructions ol { padding-left: 20px; }
+        .instructions li { margin-bottom: 10px; }
+
+        code { 
+            background-color: #111; 
+            color: var(--accent-color); 
+            padding: 4px 8px; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            border: 1px solid var(--border-color);
+        }
+        
+        footer { text-align: center; margin-top: 40px; color: #888; font-size: 0.9em; }
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>NOXTRAY 劇情算圖工具包 │ 建構器</h1>
+            <p>專為玩家設計，打造你的客製化 AI 算圖指令核心。</p>
+        </header>
+        
+        <div class="info">
+            <strong>核心角色：</strong> 角色「石睿/STRAY」與「何思年/NOX」為固定角色，將自動包含在最終設定檔中並享有最高構圖優先級。
+        </div>
+
+        <h2>1. 設定您的專屬角色 (USER)</h2>
+        <div class="card user-card">
+            <label for="user-name">您的角色名稱</label>
+            <input type="text" id="user-name" placeholder="例如: 你的名字, PC暱稱">
+            <label for="user-prompt">您的角色核心提示詞 (Base Prompt Token)</label>
+            <textarea id="user-prompt" placeholder="請貼上您角色的英文提示詞，例如：(1girl,long blonde hair, blue eyes)"></textarea>
+        </div>
+
+        <h2>2. 新增其他配角 (選填)</h2>
+        <div id="additional-characters-container"></div>
+        <button onclick="addCharacter()" class="add-btn">＋ 新增其他配角</button>
+        
+        <hr style="margin: 50px 0; border: none; border-top: 1px solid var(--border-color);">
+
+        <h2>3. 生成您的專屬工具包</h2>
+        <button onclick="generateTxt()" class="main-btn">生成並下載 .txt 工具包</button>
+
+        <div class="instructions">
+            <h2>NOXTRAY 劇情畫面提詞生成工具使用方法說明</h2>
+            <ol>
+                <li><strong>載入設定：</strong> 將下載的 <code>.txt</code> 檔案內容，上傳到GEM後台或是GPT專案。</li>
+                <li><strong>開始劇情：</strong> 像平常一樣與 AI 開始進行角色扮演。</li>
+                <li><strong>觸發繪圖：</strong> 當劇情發展到您想捕捉的瞬間，只需在對話中發送指令：<code>//生成劇情畫面題詞</code></li>
+                <li><strong>取得提示詞：</strong> AI 將會根據此設定檔的規則，自動生成一段高品質、角色特徵穩定的英文繪圖提示詞。您可以直接複製去 PixAI、Midjourney 等工具中使用！</li>
+                <li><strong>PIXAI推薦可以查看新手教學：</strong> <a href="https://minijinai75.notion.site/noxtray-prompt-helper" target="_blank" rel="noopener noreferrer">https://minijinai75.notion.site/noxtray-prompt-helper</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <footer>
+        <p>由 Minijin (@minijinai75) 和她的小精靈們一起優化與建構 💜</p>
+        <p>檔案全程在您的裝置離線處理，安全無虞。</p>
+    </footer>
+
+    <script>
+        const fullTxtTemplate = `# =================================================================
+#            智慧型繪圖提示詞產生器設定 v3.2 (優先級排序強化版)
+#     (整合固定角色人設，並能自動分析當前劇情生成提示詞)
+# =================================================================
+
+# --- 角色資料庫 (保持不變) ---
+# 這是確保角色外觀一致性的核心，AI會從這裡讀取角色的基礎樣貌。
+[CHARACTER_DATABASE]:
+{{CHARACTER_DATABASE_CONTENT}}
+# --- 提示詞建構模組 (保持不變) ---
+
+# --- 視覺提示詞結構優化規則 (PixAI 友善構圖強化版) ---
+
+# --- 角色人設完整輸出策略 (優化版) ---
+[CHARACTER_PROMPT_POLICY]:
+  enforce_verbatim_output: true
+  description: |
+    **[CRITICAL RULE]**
+    When generating the final prompt, the base_prompt_token for each present character from [CHARACTER_DATABASE] MUST be copied and pasted **verbatim** without any modification, summarization, or rephrasing.
+    **DO NOT** simplify, shorten, or merge keywords. For example, "wavy long gray-brown hair, long hair" must remain as is, and not be changed to "long wavy gray-brown hair".
+    The output structure for each character must be a single, continuous block enclosed in double parentheses: (([verbatim_base_prompt_token], [dynamic_description], [clothing])).
+    Failure to adhere to this verbatim copy rule will result in an error.
+
+[PROMPT_REFINEMENT_RULES]:
+
+  verbatim_integrity_check:
+    action: |
+      - Before finalizing the prompt, verify that the complete and unmodified string for each character's base_prompt_token from [CHARACTER_DATABASE] is present in its entirety.
+      - Compare the generated character prompt block against the source base_prompt_token. They must match exactly.
+
+  enhance_character_identity:
+    action: |
+      - 每個角色提示詞獨立一行，並使用 (()) 包覆整段提升權重
+      - 合併 base_prompt_token + 動作描述 + 服裝細節為一體，避免分散
+      - 拆解組合詞：將 hair 類標籤如 "black long hair" 改為 "black hair, long hair"
+
+  auto_keyword_boost:
+    target_keywords:
+      - hair color
+      - hair length
+      - eye color
+      - piercings
+      - gender markers
+    action: "自動對這些關鍵詞加上 ((...)) 雙層括號以提高穩定性"
+
+  # [優化] 建立一個絕對的角色優先級排序規則，以應對所有角色組合情況。
+  enforce_character_priority_order:
+    description: "在生成最終提示詞時，所有角色的描述塊必須嚴格遵循以下優先級順序排列。此規則覆蓋所有其他排序邏輯。"
+    priority_order:
+      - "1. 石睿/STRAY/睿 (character_B)"
+      - "2. 何思年/NOX/思年 (character_C)"
+      - "3. USER (character_A)"
+      - "4. 其他所有角色 (按照 character_D, E, F... 的順序)"
+    example_scenarios:
+      - "若場景為 USER + STRAY，則最終順序必須是：(([STRay...])), (([USER...]))"
+      - "若場景為 USER + NOX，則最終順序必須是：(([NOX...])), (([USER...]))"
+      - "若場景為 USER + STRAY + NOX，則最終順序必須是：(([STRay...])), (([NOX...])), (([USER...]))"
+      - "若場景為 USER + NOX + 一個自訂角色(D)，則最終順序必須是：(([NOX...])), (([USER...])), (([自訂角色D...]))"
+
+
+# --- 動態負面提示詞擴充模組 ---
+[LOGIC_NEGATIVE_MERGE]:
+  description: |
+    此模組會於生成 final_negative_prompt 前自動執行，流程如下：
+    1. 解析目前生成的 final_positive_prompt 文字內容。
+    2. 比對其中出現的關鍵詞，對照 [DYNAMIC_NEGATIVE_EXPANSION] 裡的條件表。
+    3. 根據命中的關鍵詞，收集對應的動態負面提示詞。
+    4. 最後與 default 負面提示詞合併，並自動去重。
+    5. 組合為最終的 final_negative_prompt（真實生成版本）。
+
+  process:
+    - step: 1
+      action: "掃描 final_positive_prompt 中的文字，記錄出現過的關鍵詞"
+    - step: 2
+      action: "查詢 DYNAMIC_NEGATIVE_EXPANSION 中是否有命中這些關鍵詞"
+    - step: 3
+      action: "擴充符合條件的負面提示詞集合"
+    - step: 4
+      action: "與 [negative_prompts.default] 合併並去除重複"
+    - step: 5
+      action: "建立新的 final_negative_prompt，格式為：合併後字串"
+
+[DYNAMIC_NEGATIVE_EXPANSION]:
+  enabled: true
+  match_and_expand:
+    face: ["ugly face", "deformed face", "cross-eyed"]
+    hands: ["bad hands", "missing fingers", "extra fingers", "disconnected fingers"]
+    fingers: ["bad fingers", "excess fingers"]
+    feet: ["malformed feet", "missing toes", "bad toes"]
+    body: ["bad anatomy", "disconnected limbs", "dislocated joints"]
+    "full body": ["bad anatomy", "limb error", "misaligned body parts"]
+    glass: ["bad reflections", "unwanted glare"]
+    water: ["water blur", "color bleeding"]
+    text: ["text", "watermark", "signature"]
+    background: ["messy background", "depth error", "unrealistic background"]
+
+[PROMPT_BUILDING_BLOCKS]:
+  quality_enhancers:
+    default: "masterpiece, best quality, high resolution, ultra-detailed, intricate details, sharp focus,"
+  
+  negative_prompts:
+    default: "bad quality, low quality, worst quality, lowres, jpeg artifacts, scan artifacts, mosaic, cropped, error, fewer digits, bad reflection, bad composition, bad anatomy, bad hands, bad fingers, missing fingers, extra hands, extra legs, excess fingers, light particles, artist name, text, watermark, username, copyright name,, "
+
+# --- 核心繪圖功能 (全新優化) ---
+[VISUAL_PROMPT_GENERATOR]:
+  enabled: true
+  description: |
+    在 Role Play 進行中，當玩家輸入特定指令，系統會自動分析最近的對話內容，
+    提煉出畫面關鍵元素，並結合角色資料庫，生成一段用於 PixAI 的高品質英文提示詞。
+
+  output_format:
+    prefix: "📸 捕捉到這個瞬間！PixAI 提示詞如下："
+    structure: "[品質], [主體與動態], [場景], [氛圍], [構圖]"
+
+  triggers:
+    - event: "on_demand_contextual_generation"
+      command: "//生成劇情畫面題詞"
+      process:
+        - step: 1
+          action: "接收到指令後，立刻暫停 Role Play，並回應：『好的，讓我來捕捉這個瞬間...』"
+        - step: 2
+          action: "分析觸發指令前的 [最近3-5輪對話紀錄]，作為生成圖片的依據。"
+        - step: 3
+          action: "從對話中，識別出場景中包含的角色 (例如：角色A, 角色C)。"
+        - step: 4
+          action: "從 [CHARACTER_DATABASE] 中，提取對應角色的 [base_prompt_token]。"
+        - step: 5
+          action: "再次分析對話，為每一位在場角色提煉出『動態描述』(dynamic_description)。"
+        - step: 6
+          action: "從對話中提煉出『環境描述』(environment_description)。"
+        - step: 7
+          action: "根據分析結果，構思一個最適合的『構圖建議』(composition)。"
+        - step: 8
+          action: "組合最終提示詞。嚴格遵循 [PROMPT_REFINEMENT_RULES] 中的角色優先級順序來排列角色描述。"
+        - step: 9
+          action: "輸出組合好的『正面提示詞』和固定的『負面提示詞』，然後詢問：『需要返回劇情嗎？』"
+`;
+    let additionalCharCount = 0;
+    function addCharacter(){additionalCharCount++;const e=document.getElementById("additional-characters-container"),t=document.createElement("div");t.className="card additional-card",t.innerHTML=`\n            <button class="del-btn" onclick="this.parentElement.remove()">刪除</button>\n            <h4>額外配角 ${additionalCharCount}</h4>\n            <label>角色名稱:</label>\n            <input type="text" class="char-name" placeholder="請輸入角色名稱">\n            <label>角色核心提示詞 (Base Prompt Token):</label>\n            <textarea class="char-prompt" placeholder="請貼上角色的英文提示詞..."></textarea>\n        `,e.appendChild(t)}function generateTxt(){let e="";const t=document.getElementById("user-name").value.trim(),a=document.getElementById("user-prompt").value.trim().replace(/[()]/g,"");if(!t||!a)return void alert("請務必填寫您的專屬角色(USER)的名稱和提示詞！");e+=`  character_A:\n`,e+=`    name: "${t}"\n`,e+=`    base_prompt_token: "(${a})"\n\n`,e+=`  character_B:\n`,e+=`    name: "石睿/STRAY/睿"\n`,e+=`    base_prompt_token: "(1male, solo, Handsome, perfect eyes, dark hair, green eyes, elegantly arched eyebrows, high-bridged nose, refined shape, silver earrings, light skin tone, smooth and delicate skin, bangs covering forehead, handsome boy, short hair, aegyo sal, height 175cm, slim but well-built, clean and boyish appearance)"\n\n`,e+=`  character_C:\n`,e+=`    name: "何思年/NOX/思年"\n`,e+=`    base_prompt_token: "(solo, 1male, Silver irises, moderate eye size, silver-grey eyes, slim arched eyebrows, high-bridged nose, thin lips, gray hair, short hair, 37/63 hair parting, smooth layered hair, left-side bangs, hair falling over left eye, Pale porcelain skin, handsome anime boy,masterpiece, best quality,)"\n\n`;const n=document.querySelectorAll(".additional-card");let o=68;n.forEach((t=>{const a=t.querySelector(".char-name").value.trim(),n=t.querySelector(".char-prompt").value.trim().replace(/[()]/g,"");a&&n&&(e+=`  character_${String.fromCharCode(o)}:\n`,e+=`    name: "${a}"\n`,e+=`    base_prompt_token: "(${n})"\n\n`,o++)}));const r=fullTxtTemplate.replace("{{CHARACTER_DATABASE_CONTENT}}",e.trim()),c=new Blob([r],{type:"text/plain;charset=utf-8"}),d=document.createElement("a");const i=t||"USER";d.href=URL.createObjectURL(c),d.download=`${i}專屬NOXTRAY劇情畫面提詞生成工具包.txt`,document.body.appendChild(d),d.click(),document.body.removeChild(d),URL.revokeObjectURL(d.href),alert("您的專屬工具包已生成並開始下載！請查看瀏覽器的下載項目。")}
+    </script>
+</body>
+</html>
