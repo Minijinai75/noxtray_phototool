@@ -5,28 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOXTRAY 劇情算圖工具包 │ 建構器</title>
 
-    <!-- ✨ Social Sharing Meta Tags (Text-Only Preview) -->
-    
-    <!-- 基本描述 -->
+    <!-- Social Sharing Meta Tags (Text-Only Preview) -->
     <meta name="description" content="專為玩家設計，打造你的客製化 AI 算圖指令核心。">
-
-    <!-- Open Graph (for Discord, Threads, Facebook, etc.) -->
     <meta property="og:title" content="NOXTRAY 劇情算圖工具包 │ 建構器">
     <meta property="og:description" content="專為玩家設計，打造你的客製化 AI 算圖指令核心。">
     <meta property="og:type" content="website">
-    <!-- ❗️ 將這裡的 URL 換成您部署後的網站網址 ❗️ -->
     <meta property="og:url" content="https://your-website-url.com/">
     <meta property="og:site_name" content="NOXTRAY">
-
-    <!-- Twitter Cards (for Twitter/X) -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="NOXTRAY 劇情算圖工具包 │ 建構器">
     <meta name="twitter:description" content="專為玩家設計，打造你的客製化 AI 算圖指令核心。">
-    <!-- ❗️ 將這裡的 URL 換成您部署後的網站網址 ❗️ -->
     <meta name="twitter:url" content="https://your-website-url.com/">
     <meta name="twitter:creator" content="@minijinai75">
-    
-    <!-- End of Preview Meta Tags -->
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap');
@@ -41,7 +31,7 @@
             --primary-text-color: #e9ecf2;
             --secondary-text-color: #a9b1c3;
             --muted-text-color: #8b92a3;
-            --accent-color: #9a8cff; /* Elegant Lavender Indigo */
+            --accent-color: #9a8cff;
             --accent-hover-color: #b2a7ff;
             --border-color: #242a36;
             --border-soft: rgba(255,255,255,0.06);
@@ -108,9 +98,7 @@
             box-shadow: var(--shadow-1);
         }
         .info strong { color: var(--primary-text-color); }
-        .info::before{
-            content: none !important;
-        }
+        .info::before{ content: none !important; }
 
         .card { 
             border: 1px solid var(--border-color); 
@@ -217,6 +205,23 @@
             padding: 22px 0 8px;
             border-top: 1px solid var(--border-soft);
         }
+        
+        /* ✨ 針對教學連結的美化樣式 (修正連結框框問題) */
+        .instructions li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(154,140,255,0.4);
+            padding-bottom: 2px;
+            transition: color 0.25s, border-bottom-color 0.25s;
+        }
+
+        .instructions li a:hover {
+            color: var(--accent-hover-color);
+            border-bottom: 1px solid var(--accent-hover-color);
+        }
+        /* ✨ 結束 */
+
         a { color: var(--accent-color); text-decoration: none; }
         a:hover { text-decoration: underline; }
 
@@ -280,6 +285,7 @@
     </footer>
 
     <script>
+        // JavaScript 邏輯與之前版本相同，無需修改
         const fullTxtTemplate = `# =================================================================
 #            智慧型繪圖提示詞產生器設定 v3.2 (優先級排序強化版)
 #     (整合固定角色人設，並能自動分析當前劇情生成提示詞)
